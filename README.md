@@ -103,9 +103,9 @@ http://localhost:3000/signup
 
 ```json
 {
-  "name": <"YOUR_NAME">,
-  "email": <"YOUR_EMAIL_ID">,
-  "password": <"YOUR_PASSWORD">
+  "name": "YOUR_NAME",
+  "email": "YOUR_EMAIL_ID",
+  "password": "YOUR_PASSWORD"
 }
 ```
 
@@ -120,8 +120,8 @@ http://localhost:3000/signin
 #### Body(JSON):
 ```json
 {
-  "email": <"YOUR_EMAIL_ID">,
-  "password": <"YOUR_PASSWORD">
+  "email": "YOUR_EMAIL_ID",
+  "password": "YOUR_PASSWORD"
 }
 ```
 
