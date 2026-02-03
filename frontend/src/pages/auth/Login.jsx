@@ -7,7 +7,7 @@ const Login = () =>{
       <div className="w-full max-w-md bg-white rounded-lg shadow-lg p-8">
         <div className="text-center mb-8">
           <h2 className="text-3xl font-bold text-black">Welcome back!</h2>
-          <h2 className="text-1xl font-semibold text-gray-900 mt-2">Login to manage your tasks</h2>
+          <h2 className="text-1xl font-normal text-gray-950 mt-2">Login to manage your tasks</h2>
         </div>
         <form className="space-y-5">
           <div>
@@ -34,14 +34,14 @@ const Login = () =>{
           <div className="flex justify-end">
             <Link
               to="/forget-password"
-              className="text-sm text-blue-600 hover:underline"
+              className="text-sm font-medium text-indigo-800 hover:underline"
             >
               Forget Password?
             </Link>
           </div>
           <button
           type="submit"
-          className="w-full bg-green-700 text-white py-2.5 rounded-lg font-medium hover:bg-green-900 transition"
+          className="w-full bg-green-600 text-white py-2.5 rounded-lg font-medium hover:bg-green-900 transition"
           >
             Sign in
           </button>
@@ -64,7 +64,7 @@ const Login = () =>{
         </div>
         <p className="text-center text-sm text-gray-600 mt-7">
           Don't have an account?{" "}
-          <Link to="/signup" className="text-blue-500 font-medium hover:underline">Sign up</Link>
+          <Link to="/signup" className="text-indigo-800 font-medium hover:underline">Sign up</Link>
         </p>
       </div>
     </div>
