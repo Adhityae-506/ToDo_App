@@ -6,24 +6,40 @@ import session from "express-session";
 import bcrypt from "bcrypt";
 import { db } from "./db/db.js";
 import { users } from "./schema/users.js";
+import taskRoutes from "./routes/task.routes.js";
+import { sendEmail } from "./utils/SendEmail.js";
+import passwordRoutes from "./routes/password.routes.js";
+
 
 dotenv.config();
 
 const app = express();
 
-app.use(cors());
+app.use(cors({ origin: true, credentials: true }));
 app.use(express.json());
 
 app.use(
     session({
+        name: "connect.sid",
         secret: process.env.SESSION_SECRET,
         resave: false,
-        saveUninitialized: false,
-    })
+    saveUninitialized: false,
+    
+    cookie: {
+        httpOnly: true,
+        secure: false,        
+        sameSite: "lax",      
+        maxAge: 1000 * 60 * 60 * 24, 
+    },
+})
 );
+
 
 app.use(passport.initialize());
 app.use(passport.session());
+
+app.use("/auth", passwordRoutes);
+app.use("/tasks", taskRoutes);
 
 app.post("/signup", async(req, res) => {
     try{

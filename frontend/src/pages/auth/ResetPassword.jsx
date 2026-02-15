@@ -13,10 +13,10 @@ const ResetPassword = () => {
             📬
           </div>
         </div>
-        <h1 className="text-2xl font-bold text-gray-900">
+        <h1 className="text-2xl font-bold text-slate-950">
           Reset password
         </h1>
-        <p className="text-sm text-gray-500 mt-2">
+        <p className="text-sm text-slate-700 mt-2">
           Please kindly set your new password.
         </p>
       
@@ -24,7 +24,7 @@ const ResetPassword = () => {
           
           
           <div className="text-left">
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-slate-700 mb-1">
               New password
             </label>
             <input

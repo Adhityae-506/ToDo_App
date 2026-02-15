@@ -1,5 +1,5 @@
 import {pgTable,uuid,text,boolean,date,timestamp} from "drizzle-orm/pg-core";
-import {users} from "./users";
+import {users} from "./users.js";
 
 export const tasks = pgTable("tasks", {
   id: uuid("id").defaultRandom().primaryKey(),

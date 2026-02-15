@@ -10,7 +10,7 @@ const ResetSuccess = () =>{
                     </div>
                 </div>
 
-                <h1 className="text-2xl font-bold text-gray-900">Password reser successful</h1>
+                <h1 className="text-2xl font-bold text-gray-900">Password reset successful</h1>
                 <p className="text-green-500 mt-2 mb-6">Your Password has been updated. You can now sign in with your new password.</p>
 
                 <Link to="/login" className="block w-full bg-green text-white py-2.5 rounded-lg font-medium hover:bg-green-900 transition">Go to login</Link>
