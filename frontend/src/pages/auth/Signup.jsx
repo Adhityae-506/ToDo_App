@@ -1,6 +1,26 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import API from "../../api/axios"
 
 const Signup = () => {
+    const [name, setName] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const navigate = useNavigate();
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        try {
+            await API.post("/signup", { name, email, password });
+
+            alert("Account created successfully. Please login.");
+            navigate("/login");
+        } catch (err) {
+            alert(err.response?.data?.error || "Signup failed");
+        }
+    };
+    
     return (
         <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4 ">
             <div className="w-full max-w-md bg-white rounded-lg shadow-lg p-8">
@@ -9,24 +29,24 @@ const Signup = () => {
                     <h2 className="text-3xl text-center font-bold text-slate-950">Create Account</h2>
                     <h3 className="text-sm  text-center font-normal text-gray-950 mt-2">Organize your work. Track progress. Get things done.</h3>
                 </div>
-                <form className="space-y-4">
+                <form onSubmit={handleSubmit} className="space-y-4">
                     <div>
                         <label className="block text-sm font-medium text-gray-700 mb-1">
                             Your Name
                         </label>
-                        <input type="name" placeholder="Full Name" className="w-full rounded-lg border border-gray-300 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-black" />
+                        <input type="name" placeholder="Full Name" value={name} onChange={(e) => setName(e.target.value)} required className="w-full rounded-lg border border-gray-300 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-black"  />
                     </div>
                     <div>
                         <label className="block text-sm font-medium text-gray-700 mb-1">
                             Email address
                         </label>
-                        <input type="email" placeholder="Enter your email address" className="w-full rounded-lg border border-gray-300 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-black" />
+                        <input type="email" placeholder="Enter your email address" value={email} onChange={(e) => setEmail(e.target.value)} required className="w-full rounded-lg border border-gray-300 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-black" />
                     </div>
                     <div>
                         <label>
                             Password
                         </label>
-                        <input type="password" placeholder="Enter your password" className="w-full rounded-lg border border-gray-300 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-black mb-4" />
+                        <input type="password" placeholder="Enter your password" value={password} onChange={(e) => setPassword(e.target.value)} className="w-full rounded-lg border border-gray-300 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-black mb-4" />
                     </div>
                     <button type="submit" className="w-full bg-green-600 text-white py-2.5 rounded-lg font-medium hover:bg-green-900 transition">
                         Sign up

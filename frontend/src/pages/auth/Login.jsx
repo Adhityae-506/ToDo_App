@@ -11,17 +11,16 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const fakeUser = {
-      id:1,
-      name: "Adhi",
-      email: "adhi@test.com"
-    };
+    const result = await login(email, password);
 
-    login(fakeUser);
-    navigate("/dashboard");
+    if(result.success){
+      navigate("/dashboard");
+    }else{
+      alert(result.message);
+    }
   };
 
   return (
@@ -56,7 +55,7 @@ const Login = () => {
               to="/forgot-password"
               className="text-sm font-medium text-indigo-800 hover:underline"
             >
-              Forget Password?
+              Forgot Password?
             </Link>
           </div>
           <button

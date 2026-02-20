@@ -8,10 +8,7 @@ import Dashboard from "../pages/dashboard/Dashboard";
 import ResetSuccess from "../pages/auth/ResetSuccess";
 import ProtectedRoute from "./ProtectedRoute";
 
-
-
-
-const AppRoutes = () => {
+const AppRoutes = () => {   
     return (
         <BrowserRouter>
             <Routes>

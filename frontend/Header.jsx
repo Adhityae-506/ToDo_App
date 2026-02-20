@@ -1,4 +1,4 @@
-import { useAuth } from "../../context/AuthContext";
+import { useAuth } from "./src/context/AuthContext";
 
 const Header = ({ title = "Today", count = 0 }) => {
   const { user } = useAuth();

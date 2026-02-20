@@ -1,55 +1,71 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import {
+  Children,
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
+import { useAuth } from "./AuthContext";
+import API from "../api/axios";
 
 const TaskContext = createContext();
 
-export const useTasks = () => useContext(TaskContext);
+export const useTask = () => useContext(TaskContext);
 
 export const TaskProvider = ({ children }) => {
   const [tasks, setTasks] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  // Load from localStorage
-  useEffect(() => {
-    const stored = localStorage.getItem("tasks");
-    if (stored) setTasks(JSON.parse(stored));
-  }, []);
-
-  // Save to localStorage
-  useEffect(() => {
-    localStorage.setItem("tasks", JSON.stringify(tasks));
-  }, [tasks]);
-
-  // ➕ Add task
-  const addTask = (task) => {
-    setTasks((prev) => [
-      ...prev,
-      {
-        id: Date.now(),
-        title: task.title,
-        description: task.description,
-        dueDate: task.dueDate,
-        status: "pending",
-        createdAt: new Date().toISOString(),
-      },
-    ]);
+  const fetchTasks = async () => {
+    try {
+      setLoading(true);
+      const res = await API.get("/tasks");
+      setTasks(res.data);
+    } catch (err) {
+      console.error("Failed to fetch tasks", err);
+    } finally {
+      setLoading(false);
+    }
   };
 
+  const { user } = useAuth();
 
-  const completeTask = (id) => {
-    setTasks((prev) =>
-      prev.map((t) =>
-        t.id === id ? { ...t, status: "completed" } : t
-      )
-    );
+  useEffect(() => {
+    if (user) {
+      fetchTasks();
+    }
+  }, [user]);
+
+  const addTask = async (task) => {
+    try {
+      await API.post("/tasks", task);
+      fetchTasks();
+    } catch {
+      console.error("Failed to add task", err);
+    }
   };
 
-  // ❌ Delete task
-  const deleteTask = (id) => {
-    setTasks((prev) => prev.filter((t) => t.id !== id));
+  const toggleTask = async (id) => {
+    try {
+      await API.patch(`/tasks/${id}/toggle`);
+      fetchTasks();
+    } catch (err) {
+      console.error("Toggle failed", err);
+    }
+  };
+
+  const deleteTask = async (id) => {
+    try {
+      await API.delete(`/tasks/${id}`);
+      fetchTasks();
+    } catch (err) {
+      console.error("Delete failed", err);
+    }
   };
 
   return (
     <TaskContext.Provider
-      value={{ tasks, addTask, completeTask, deleteTask }}
+      value={{ tasks, fetchTasks, addTask, toggleTask, deleteTask, loading }}
     >
       {children}
     </TaskContext.Provider>
