@@ -5,6 +5,7 @@ import passport from "./auth/passport.js";
 import session from "express-session";
 import bcrypt from "bcrypt";
 import { db } from "./db/db.js";
+import { eq } from "drizzle-orm";
 import { users } from "./schema/users.js";
 import taskRoutes from "./routes/task.routes.js";
 import { sendEmail } from "./utils/SendEmail.js";
@@ -23,15 +24,15 @@ app.use(
         name: "connect.sid",
         secret: process.env.SESSION_SECRET,
         resave: false,
-    saveUninitialized: false,
-    
-    cookie: {
-        httpOnly: true,
-        secure: false,        
-        sameSite: "lax",      
-        maxAge: 1000 * 60 * 60 * 24, 
-    },
-})
+        saveUninitialized: false,
+
+        cookie: {
+            httpOnly: true,
+            secure: false,
+            sameSite: "lax",
+            maxAge: 1000 * 60 * 60 * 24,
+        },
+    })
 );
 
 
@@ -41,9 +42,18 @@ app.use(passport.session());
 app.use("/auth", passwordRoutes);
 app.use("/tasks", taskRoutes);
 
-app.post("/signup", async(req, res) => {
-    try{
+app.post("/signup", async (req, res) => {
+    try {
         const { name, email, password } = req.body;
+
+        const existingUser = await db
+            .select()
+            .from(users)
+            .where(eq(users.email, email));
+
+        if (existingUser.length > 0) {
+            return res.status(400).json({ error: "Email already exists" });
+        }
 
         const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -63,9 +73,9 @@ app.post("/signup", async(req, res) => {
                 name: result[0].name,
             },
         });
-    }catch(err){
+    } catch (err) {
         console.error(err);
-        res.status(500).json({error:"Signup failed"});
+        res.status(500).json({ error: "Signup failed" });
     }
 });
 
@@ -98,6 +108,29 @@ app.post("/signin", (req, res, next) => {
         });
     })(req, res, next);
 });
+
+app.post("/logout", (req, res) => {
+    req.logout(() => {
+        req.session.destroy(() => {
+            res.clearCookie("connect.sid");
+            res.json({ message: "Logged out successfully" });
+        });
+    });
+});
+
+
+app.get("/me", (req, res) => {
+    if (!req.user) {
+        return res.status(401).json({ message: "Unauthorized" });
+    }
+    res.json({
+        id: req.user.id,
+        email: req.user.email,
+        name: req.user.name,
+    });
+});
+
+
 
 app.get("/", (req, res) => {
     res.send("Server is running");

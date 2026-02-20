@@ -40,12 +40,12 @@ export const updateTask = async(req, res) =>{
         const {title, taskDate} = req.body;
 
         const updated = await db
-        .updated(tasks)
+        .update(tasks)
         .set({title, taskDate})
         .where(and(eq(tasks.id, id), eq(tasks.userId, req.user.id)))
         .returning()
         
-        res.josn(updated[0]);
+        res.josn(update[0]);
     }catch(err){
         res.status(500).json({message: "Failed to update task"});
     }
