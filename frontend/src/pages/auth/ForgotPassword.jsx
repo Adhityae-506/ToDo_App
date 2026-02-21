@@ -46,11 +46,11 @@ const ForgotPassword = () => {
                         />
                     </div>
                     {message && (
-                        <p className="text-green-600 text-sm">{message}</p>
+                        <p className="text-green-600 bg-green-50 border border-green-200 px-3 py-2 rounded-md text-sm">{message}</p>
                     )}
 
                     {error && (
-                        <p className="text-red-500 text-sm">{error}</p>
+                        <p className="text-red-600 bg-red-50 border border-red-200 px-3 py-2 rounded-md text-sm">{error}</p>
                     )}
                     <button
                         type="submit"
