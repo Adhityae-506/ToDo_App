@@ -32,7 +32,7 @@ const Dashboard = () => {
         <Topbar />
 
         <div className="p-6 space-y-6">
-          {/* Welcome Section */}
+          
           <div>
             <h1 className="text-2xl font-bold text-gray-800">
               Welcome back, <span className="text-red-500">{user?.name}</span>
@@ -40,7 +40,7 @@ const Dashboard = () => {
             <p>Nice to see you today.</p>
           </div>
 
-          {/* Stats Cards */}
+          
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="bg-white p-6 rounded-xl shadow">
               <p className="text-sm text-gray-500">Total Tasks</p>
@@ -62,7 +62,7 @@ const Dashboard = () => {
             </div>
           </div>
 
-          {/* Add Task Section */}
+          
           <div className="bg-white rounded-xl shadow p-6">
             <h2 className="text-lg font-semibold text-gray-800 mb-4">
               Add New Task
@@ -93,7 +93,7 @@ const Dashboard = () => {
             </div>
           </div>
 
-          {/* Tasks List */}
+          
           <div className="bg-white rounded-xl shadow p-6">
             <h2 className="text-lg font-semibold text-gray-800 mb-4">
               Today’s Tasks
