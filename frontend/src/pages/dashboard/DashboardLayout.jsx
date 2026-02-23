@@ -4,12 +4,19 @@ import { useState } from "react";
 import { useAuth } from "../../context/AuthContext";
 import { useTask } from "../../context/TaskContext";
 
+
 const Dashboard = () => {
   const { user } = useAuth();
   const { tasks, toggleTask, deleteTask, addTask, loading } = useTask();
 
   const [title, setTitle] = useState("");
   const [date, setDate] = useState("");
+
+  const today = new Date().toLocaleDateString("en-CA");
+  
+  const todayTasks = tasks.filter(
+    (t) => t.taskDate === today
+  );
 
   const total = tasks.length;
   const completed = tasks.filter((t) => t.completed).length;
@@ -35,7 +42,7 @@ const Dashboard = () => {
           
           <div>
             <h1 className="text-2xl font-bold text-gray-800">
-              Welcome back, <span className="text-red-500">{user?.name}</span>
+              Welcome back, <span className="text-green-500">{user?.name}</span>
             </h1>
             <p>Nice to see you today.</p>
           </div>
@@ -44,19 +51,19 @@ const Dashboard = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="bg-white p-6 rounded-xl shadow">
               <p className="text-sm text-gray-500">Total Tasks</p>
-              <h2 className="text-2xl font-bold mt-2">{total}</h2>
+              <h2 className="text-2xl font-bold mt-2 text-black">{total}</h2>
             </div>
 
             <div className="bg-white p-6 rounded-xl shadow">
               <p className="text-sm text-gray-500">Completed</p>
-              <h2 className="text-2xl font-bold mt-2 text-green-600">
+              <h2 className="text-2xl font-bold mt-2 text-green-700">
                 {completed}
               </h2>
             </div>
 
             <div className="bg-white p-6 rounded-xl shadow">
               <p className="text-sm text-gray-500">Pending</p>
-              <h2 className="text-2xl font-bold mt-2 text-red-500">
+              <h2 className="text-2xl font-bold mt-2 text-red-700">
                 {pending}
               </h2>
             </div>
@@ -86,7 +93,7 @@ const Dashboard = () => {
 
               <button
                 onClick={handleAddTask}
-                className="bg-red-500 text-white px-6 py-2 rounded-lg hover:bg-red-600 transition"
+                className="bg-green-500 text-white px-6 py-2 rounded-lg hover:bg-green-600 transition"
               >
                 Add
               </button>
@@ -114,15 +121,15 @@ const Dashboard = () => {
                   </div>
                 ))}
               </div>
-            ) : tasks.length === 0 ? (
+            ) : todayTasks.length === 0 ? (
               <div className="flex flex-col items-center py-10 text-center">
-                <p className="text-gray-500">No tasks yet.</p>
+                <p className="text-gray-500">No tasks for today.</p>
                 <p className="text-sm text-gray-400 mt-1">
-                  Add your first task above to get started.
+                  Tasks executed successfully! Time to recharge. 
                 </p>
               </div>
             ) : (
-              tasks.map((task, index) => (
+              todayTasks.map((task, index) => (
                 <div
                   key={task.id}
                   className={`flex items-center justify-between py-3 ${
