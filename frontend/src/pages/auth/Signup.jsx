@@ -96,7 +96,7 @@ const Signup = () => {
 
             <div className="relative">
               <input
-                type={showPassword ? "text" : "password"} 
+                type={showPassword ? "text" : "password"}
                 placeholder="Enter your password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
@@ -137,7 +137,13 @@ const Signup = () => {
           <div className="flex-1 border-t border-gray-300" />
         </div>
         <div className="space-y-3">
-          <button className="w-full flex items-center justify-center gap-2 border border-gray-300 rounded-lg px-4 py-2 hover:bg-gray-50 transition-opacity">
+          <button
+            type="button"
+            onClick={() =>
+              (window.location.href = "http://localhost:3000/auth/google")
+            }
+            className="w-full flex items-center justify-center gap-2 border border-gray-300 rounded-lg px-4 py-2 hover:bg-gray-50 transition-opacity"
+          >
             <img
               src="https://www.svgrepo.com/show/475656/google-color.svg"
               alt="Google SVG"
@@ -147,7 +153,13 @@ const Signup = () => {
               Continue with Google
             </span>
           </button>
-          <button className="w-full flex items-center justify-center gap-2 border border-gray-300 rounded-lg px-4 py-2 hover:bg-gray-50 transition">
+          <button
+            type="button"
+            onClick={() => {
+              window.location.href = "http://localhost:3000/auth/github";
+            }}
+            className="w-full flex items-center justify-center gap-2 border border-gray-300 rounded-lg px-4 py-2 hover:bg-gray-50 transition"
+          >
             <img
               src="https://www.svgrepo.com/show/512317/github-142.svg"
               alt="github"
