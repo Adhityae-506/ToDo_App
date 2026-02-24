@@ -10,6 +10,7 @@ import { users } from "./schema/users.js";
 import taskRoutes from "./routes/task.routes.js";
 import { sendEmail } from "./utils/SendEmail.js";
 import passwordRoutes from "./routes/password.routes.js";
+import oauthRoutes from "./routes/oauth.js";
 
 
 dotenv.config();
@@ -41,6 +42,7 @@ app.use(passport.session());
 
 app.use("/auth", passwordRoutes);
 app.use("/tasks", taskRoutes);
+app.use("/auth",oauthRoutes);
 
 app.post("/signup", async (req, res) => {
     try {
