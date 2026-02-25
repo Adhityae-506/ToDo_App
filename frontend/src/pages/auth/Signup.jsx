@@ -112,6 +112,21 @@ const Signup = () => {
               >
                 {showPassword ? "Hide" : "Show"}
               </button>
+
+              {password && (
+                <div className="mt-3">
+                  <div className="w-full h-2 bg-gray-200 rounded-full">
+                    <div
+                      className={`h-2 rounded-full transition-all duration-300 ${strengthColor}`}
+                      style={{ width: `${(strength / 5) * 100}%` }}
+                    />
+                  </div>
+                  <p className="text-xs mt-1 text-gray-600">
+                    Password strength:{" "}
+                    <span className="font-medium">{strengthLabel}</span>
+                  </p>
+                </div>
+              )}
             </div>
           </div>
           {error && (
